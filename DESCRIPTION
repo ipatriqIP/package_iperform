@@ -1,0 +1,25 @@
+Package: iperform
+Title: Performance
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Patrick", "ILUNGA BUABUA", , "contact@ip-ilunga.com", role = c("aut", "cre")),
+    person(, "ILUNGA BUABUA", role = "cph")
+  )
+Description: Calcule la performance d'une série temporelle sur une période bien spécifique.
+License: GPL-3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Imports: 
+    lubridate,
+    matrixStats
+Language: fr
+VignetteBuilder: knitr
+LazyData: true
+Depends: 
+    R (>= 2.10)
