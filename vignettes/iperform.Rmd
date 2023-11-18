@@ -17,28 +17,33 @@ knitr::opts_chunk$set(
 ```
 
 
+
 ## Introduction
 
-En finance, en comptabilité ou en marketing operationnel, les ateurs suivent au quotidien l'évolution de leur activité en comparant à chaque fois les résultats d'une date (ou d'une periode) à une date (ou une période) antérieure ou par rapport aux résultats du marché et des concurrents directs. On parle là des concepts de performance :
+Décrire, résumer, modéliser et prédire font partie des principaux objectifs poursuivis lors de l'analyse d'une série temporelle. L’étape de la description, comme pour toutes les données, consiste souvent a des représentations graphiques telles que chronogramme, hsitogramme, diagramme retardé , et aux calculs des statistiques issuelles telles que moyenne, variance, coefﬁcients d’aplatissement et d’asymétrie. 
 
-* year to date : qui conrespond au résultat cumulé commençant le premier jour de l’année civil ou de l'exercice en cours jusqu’à la date actuelle,
+Dans les domaines de finance, de comptabilité ou de marketing operationnel, les experts suivent au quotidien l'évolution de leurs activités en comparant à chaque fois les résultats d'une date (ou d'une periode) par rapport à une date (ou une période) antérieure, par rapport aux résultats du marché global ou par rapport aux reslustats des leurs concurrents directs. On parle là de concept de *performance*. Les plus souvent sont :
 
-* month to date : qui conrespond au résultat cumulé commençant le premier jour du mois jusqu’à la date actuelle au cours du même mois,
+* La performance *year to date* (YTD): qui conrespond au résultat cumulé commençant le premier jour de l’année civil ou de l'exercice en cours jusqu’à la date actuelle,
 
-* week to date : qui conrespond au résultat cumulé commençant le permier jour de la semaine jusqu’à la date actuelle au cours de la même semaine.
+* La performance *month to date* (MTD) : qui conrespond au résultat cumulé commençant le premier jour du mois en cours jusqu’à la date actuelle au cours du même mois,
+
+* La performance *week to date* (WTD) : qui conrespond au résultat cumulé commençant le permier jour de la semaine jusqu’à la date actuelle au cours de la même semaine.
 
 
-On peut egalement utiliser les concepts *day to date* (pour la durée écoulée au cours d'une journée pour ceux qui suivent l’activité par heure) ou *quater to date* (pour la durée écoulée sur un trimestre) ou encore *full month*, *full year*, etc pour designer la totalité de la periode indiquée.
+On peut egalement utiliser les concepts de *day to date* (pour la durée écoulée au cours d'une journée pour ceux qui suivent l’activité par heure) ou *quater to date* (pour le résultat cumulé sur un trimestre) ou encore *full month*, *full year*, etc pour designer la totalité de la periode indiquée.
 
-C'est ainsi que cette vignette decrit l'utilisation des differentes fonctions offerte par le package *iperfom* telle que `d_day()`, `wtd()`, `mtd()`, et `ytd()` qui renvois ces valeur pour une série temporelle à une date précise ou une intervalle de temps donné.
+Ces concepts représentent à eux seuls près de 90% de l’information de pilotage des activités des analystes du secteur bancaire, télécommunications avant d'arriver à la modélisation et la prédiction des résultats futurs. Avec la revolution des solutions Big Data sur la visualisation des données, plusieurs tableaux de bord utilisent ces concepts en combinaison avec les variations par rapport aux dates ou periodes antérieures pour enrichir l'histoire lors de la présentation des données, des résultats ou de la performance de l’activité.
 
-Avec la revolution des solutions Big Data sur la visualisation des données, plusieurs tableaux de bord utilisent ces concepts en combinaison avec les variations par rapport aux dates ou periodes antérieures pour enrichir l'histoire lors de la présentation des données, des résultats ou de la performance de l’activité. C'est ce qui donne toute la motivation de rassembler dans un seul paquet, toutes fonctions qui repondent à ce besoin, d'où le package *iperform*.
 
-Le package *iperform* , couplé avec le package R *lubridate* offre en cette première version les principales fonctions que voici regrouper en cinq (5) catégories :
+Cette vignette decrit l'utilisation des differentes fonctions offertes par le package *iperfom* pour repondre à ce besoin devenu de plus en plus important avec la révolution des données.
+
+
+Le package *iperform*, couplé avec le package R *lubridate* offre en cette première version les principales fonctions que voici regrouper en quatre (4) catégories :
 
 ### les performances
 
-* `d_day()` qui renvoie la valeur d'une série à une date donnée en argument.
+* `dday()` qui renvoie la valeur d'une série à une date donnée en argument.
 
 * `wtd()` qui renvoie la somme des valeurs de la série depuis le début de la semaine correspondante à la date renseignée en argurment.
 
@@ -57,27 +62,22 @@ Le package *iperform* , couplé avec le package R *lubridate* offre en cette pre
 
 ### les previsions
 
-* `forecast_m()` qui renvoie l'estimation des valeurs de la série en des dates futures en utilisateur un modèle spécifique de prédiction.
+* `forecast_m()` qui renvoie l'estimation des valeurs de la série en des dates futures en utilisant un modèle spécifique de prédiction.
 
 
 ### les transformations
 
-* `m_mean()`qui renvoie des nouveaux jeu des données créés après transformation de la série intiales. On cite , 
+* `m_mean()`qui renvoie un nouveau jeu des données créé après transformation de la série intiales. 
 
 * `rva()` qui renvoie les effets expliquant la vartiation d'une série par rapport aux autres séries sur la même période.
-
-
-### les nettoyages
-
-* `v_atypique()` qui modifient les valeurs de la série en s'attanquant aux valeurs atypiques telles que les valeurs manquantes, les valeurs etrêmes, etc.
-
 
 Dans cette vignette, on présente les mecanismes des calculs derrière ces fonctions.
 
 
+
 ## Exemples
 
-Pour commencer, nous allons charger quelques packages nécessaires
+Pour commencer, nous allons charger quelques packages nécessaires dont nous avons besoin
 
 ```{r setup, message=FALSE}
 library(lubridate)
@@ -86,12 +86,13 @@ library(iperform)
 ```
 
 
-Nous allons illustré le fonctionnement de ces fonctions à l'aide d'un jeu de données contenant les indicateurs de l’activité du service voix au pres d'un operateur de téléphonie mobile.
+Nous allons illustré le fonctionnement de ces fonctions à l'aide d'un jeu de données contenant les indicateurs de l’activité du service voix d'un operateur de téléphonie mobile anonyme.
 
 ```{r}
 data(voix_tel_mob)
 
 ```
+
 
 Ce jeu des données contient 4 variables :
 
@@ -104,10 +105,19 @@ Ce jeu des données contient 4 variables :
 * `revenu`, variable de type numeric qui renseigne le chiffre d'affaire ou revenu généré par les usages des clients à un tarif quelconque.
 
 
-Pour connaitre le `revenu` que l'ensemble des clients ont généré en date du *11 août 2023*, on utilise la fonction `d_day()` comme suit :
+```{r}
+head(voix_tel_mob)
+
+```
+
+
+
+### 1. La fonction *dday()*
+
+Pour connaitre le `revenu` que l'ensemble des clients ont généré en date du *11 août 2023*, on utilise la fonction `dday()` comme suit :
 
 ```{r}
-d_day(data = voix_tel_mob,
+dday(data = voix_tel_mob,
       date = "2023-08-11",
       d = 0,
       x = "revenu",
@@ -117,7 +127,7 @@ d_day(data = voix_tel_mob,
 ```
 
 
-### Les arguments
+Les arguments de la fonction
 
 * `data` le jeu des données qui contient l'ensemble des données à exploiter,
 
@@ -130,6 +140,7 @@ d_day(data = voix_tel_mob,
 * `decimal` un entier designant le nombre de chiffre après la virgule qu'on souhaite afficher si le résultat est un decimal. Sa valeur par défaut vaut `0`.
 
 
+### 2. La fonction *mtd()*
 
 Pour connaître la performance *month-to-date* du revenu réalisée en date du *11 août 2023*, c'est-à-dire la somme des valeurs partant du *01 août 2023* au *11 août 2023* inclus, on utilise la fonction `mtd()` comme suit :
 
@@ -144,10 +155,12 @@ mtd(data = voix_tel_mob,
 ```
 
 
-ici, seul l'argument `m` est nouveau, les autres ont la même utilité que pour la fonction `d_day()`.
+ici, seul l'argument `m` est nouveau, les autres ont la même utilité que pour la fonction `dday()`.
 
 * `m` un entier qui determine le decalage du mois à prendre, la valeur par défaut vaut `0`. si `m=1`, on prendra la date du *11 juillet 2023*.
 
+
+### 3. La fonction *ytd()*
 
 Pour connaître la performance *year-to-date* du revenu réalisée en date du *11 août 2023*, c'est-à-dire la somme des valeurs partant du *01 janvier 2023* au *11 août 2023* inclus, on utilise la fonction `ytd()` comme suit :
 
@@ -166,10 +179,145 @@ idem pour les arguments.
 * `a` un entier qui determine le decalage de l’année à prendre, la valeur par défaut vaut `0`. Si `a=1`, on prendra la date du *11 août 2022*.
 
 
-Cas des fonctions aperçu 
+### 4. La fonction *wtd()*
+
+Pour connaître la performance *week-to-date* du revenu réalisée en date du *11 août 2023*, on part du fait que la date *11 août 2023* est un vendredi, donc le 6e de la semaine en considerant le dimanche *06 août 2023* comme 1er jour. Ainsi, on calcule la somme des valeurs partant du *06* au *11* inclus en utilisant la fonction `wtd()` comme suit :
 
 ```{r}
-
+wtd(data = voix_tel_mob,
+    date = "2023-08-11",
+    w = 0,
+    x = "revenu",
+    unite = 1,
+    decimal = 0)
 
 ```
+
+idem pour les arguments.
+
+* `w` un entier qui determine le decalage de la semaine à prendre, la valeur par défaut vaut `0`. Si `w=1`, on prendra la date du vendredi *4 août 2022*.
+
+
+### 5. La fonction *full_m()*
+
+Cette fonction calcule la somme des valeurs d'une série au cours d'un mois. Le mois est déterminé par la date qu'on passe en argument à la fonction. Ainsi le code ci-dessous va nous renvoyer le total jusqu’en date du *31 août 2023* :
+
+```{r}
+full_m(data = voix_tel_mob,
+       date = "2023-08-11",
+       x = "revenu",
+       unite = 1000,
+       decimal = 0,
+       cumul = FALSE)
+
+```
+
+
+Et cela quelque soit la date qu'on introduit en argument si cette dernière est comprise entre *01 août 2023* et *31 août 2023*. On peut le verifier avec le code ci-dessous :
+
+```{r}
+full_m(data = voix_tel_mob,
+       date = "2023-08-25",
+       x = "revenu",
+       unite = 1000)
+
+```
+
+
+### 6. La fonction *forecast_m()*
+
+Pour cette version du package, la fonction `forecast_m()` ne fait pas grande chose, si ce n’est de calculer le total qu'on pourrait avoir sur un mois, connaissant sa performance *month-to-date* et le nombre du jour restant dans le même mois. Par exemple, si on place à la date du *2023-08-11*, le forecast en cette date vaut :
+
+```{r}
+forecast_m(data = voix_tel_mob,
+           date = "2023-08-11",
+           x = "revenu",
+           unite = 1000,
+           decimal = 0,
+           cumul = FALSE,
+           mod = "NULL") 
+
+```
+
+
+En constate que cette valeur sera différente en fonction de la date à laquelle on se place au cours du mois :
+
+```{r}
+vec_date = c("2023-08-20", "2023-08-25", "2023-08-28", "2023-08-30", "2023-08-31")
+
+for (d in vec_date) {
+  F = forecast_m(data = voix_tel_mob,
+             date = d,
+             x = "revenu",
+             unite = 1000)
+  print(F)
+  }
+
+```
+
+
+L'arguments `mod`
+
+* `mod`, un character qui determine le type de modèle à utiliser pour faire la prediction. Sa valeur par defaut est `NULL` et l'alternative ne fait pas l'objet de cette version.
+
+Mais au moins, on constate que pour ce modèle, plus on donne en argument une date qui est proche de la clôture du mois, plus la fonction renvoit une valeur proche de la fonction `full_m`.
+
+
+
+### 7. La fonction *overview()*
+
+On a l'habitude d’utiliser la fonction de base `summary()` qui renvoie les statistiques issuelles, cependant ces paramètres entrent rarement dans le narratif des analystes des données du secteur susmentionnés. Pour reporter les résultats, les experts presentent des apercus globaux ou ils parlent des performances *YTD*, *MTD*, *WTD*, etc... et leurs comparaisons par rapport aux périodes antérieures.
+
+Rappellons ici quelques concepts des comparaisons :
+
+* La comparaison *DoD* en date du *2023-08-11* : elle consiste à calculer la variation du revenu en cette date par rapport à la date du *2023-08-10*, c-est-à-dire:
+$$DoD = \frac{dday - dday_1}{dday}$$
+
+* La comparaison *SPLM* en date du *2023-08-11* : elle consite à calculer la variation *MTD* au *2023-08-11* par rapport au *MTD* en date du *2023-07-11* (on note souvent par $MTD_1$) :
+$$SLPM = \frac{MTD - MTD_1}{MTD}$$
+
+* La performance *YoY* en date du *2023-08-11* : elle consite à calculer la variation *YTD* au *2023-08-11* par rapport au *YTD* en date du *2022-08-11* (on note souvent par $YTD_1$) :
+$$YoY = \frac{YTD - YTD_1}{YTD}$$
+
+On parle aussi de la comparaison *WoW*, *MoM*, etc.
+
+
+Ainsi, si on souhaite avoir un aperçu du revenu en date du *2023-08-11*, on utilise la fonction `overview()` comme suit :
+
+```{r overview, eval = FALSE}
+overview(data = voix_tel_mob,
+         date = "2023-08-11",
+         x = "revenu",
+         unite = 1000,
+         decimal = 2,
+         cumul = FALSE)
+
+```
+
+
+Lecture de la sortie du code R :
+
+```{r, echo=FALSE}
+resultat = overview(data = voix_tel_mob,
+                    date = "2023-08-11",
+                    x = "revenu",
+                    unite = 1000,
+                    decimal = 2,
+                    cumul = FALSE)
+
+resultat
+
+```
+
+
+On pourra par exemple dire :
+
+En date du *2023-08-11*, l'operateur mobile a réalisé un chiffre d'affaire de `r resultat[, "MTD"]` usd en MTD, soit une `r if (resultat[, "SPLM"] < 0) {"baisse"} else {"hausse"}` de  `r paste(resultat[, "SPLM"], "%", sep="")` comparé à la même periode du mois passé. Avec le nombre de jours restant au cours du mois, on prévoit un total de `r resultat[, "FORECAST"]` usd à la fin mois, ce qui fera une `r if (resultat[, "MoM"] < 0) {"baisse"} else {"hausse"}` de `r paste(resultat[, "MoM"], "%", sep="")` par rapport à tout le  mois de Juillet. En outre, la performance year-to-date atteint `r resultat[, "YTD"]` usd, soit une `r if (resultat[, "SPLY"] < 0) {"baisse"} else {"hausse"}` de `r paste(resultat[, "SPLY"], "%", sep="")` par rapport à l’année passée.
+
+
+Certe, ce discours ne represente pas les causes qui expliquent les resultats en chaque période ni les différentes variations, mais au moins, raconte une histoire évolutive et un aperçu global de la perfomance de l’activité. Il ne restera qu'au rapporteur d'enrichir son histoire avec les resultats des analyses des causes à effet.
+
+
+## Note
+
 

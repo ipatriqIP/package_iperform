@@ -33,8 +33,13 @@ full_m <- function(data,
                    decimal = 0,
                    cumul = FALSE) {
 
-  stopifnot(is.data.frame(data), is.Date(as.Date(date)), is.numeric(data[, x]))
+  stopifnot(is.data.frame(data),
+            is.character(date) & is.Date(as.Date(date)),
+            is.numeric(data[, x]),
+            is.logical(cumul)
+            )
   stopifnot("date" %in% colnames(data), x %in% colnames(data))
+  stopifnot(length(date) == 1, length(unite) == 1, length(decimal) == 1)
 
   annee <- year(date)
   mois <- month(date)
@@ -43,7 +48,8 @@ full_m <- function(data,
     nb_jr <- 29
     }
   else {
-    nb_jr <- ifelse(mois %in% c(4, 6, 9, 11), 30, ifelse(mois == 2, 28, 31))
+    nb_jr <- ifelse(mois %in% c(4, 6, 9, 11), 30,
+                    ifelse(mois == 2, 28, 31))
     }
 
   data$annee <- year(data[, "date"])
@@ -51,7 +57,7 @@ full_m <- function(data,
   data$jour_m <- mday(data[, "date"])
 
   if (isTRUE(cumul)) {
-    valeur <- data[data[, "jour_m"] == nb_jr, x]
+    valeur <- data[(data[, "annee"] == annee) & (data[, "mois"] == mois) & (data[, "jour_m"] == nb_jr), x]
     }
   else {
     valeur <- sum(data[(data[, "annee"] == annee) & (data[, "mois"] == mois) & (data[, "jour_m"] >= 1) & (data[, "jour_m"] <= nb_jr), x])

@@ -37,8 +37,14 @@ mtd <- function(data,
                 decimal = 0,
                 cumul = FALSE) {
 
-  stopifnot(is.data.frame(data), is.Date(as.Date(date)), is.numeric(m), is.numeric(data[, x]))
+  stopifnot(is.data.frame(data),
+            is.character(date) & is.Date(as.Date(date)),
+            is.numeric(m),
+            is.numeric(data[, x]),
+            is.logical(cumul)
+            )
   stopifnot("date" %in% colnames(data), x %in% colnames(data))
+  stopifnot(length(date) == 1, length(m) == 1, length(unite) == 1, length(decimal) == 1)
 
   annee <- year(date)
   jour_m <- mday(date)
@@ -49,7 +55,7 @@ mtd <- function(data,
   data$jour_m <- mday(data[, "date"])
 
   if (isTRUE(cumul)) {
-    valeur <- data[data[, "date"] == as.Date(date) + 30*m, x]
+    valeur <- data[(data[, "annee"] == annee) & (data[, "mois"] == mois + m) & (data[, "jour_m"] == jour_m), x]
     }
   else {
     valeur <- sum(data[(data[, "annee"] == annee) & (data[, "mois"] == mois) & (data[, "jour_m"] >= 1) & (data[, "jour_m"] <= jour_m), x])

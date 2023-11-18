@@ -5,7 +5,7 @@
 \alias{forecast_m}
 \title{Estimation du total d'un mois sur base des quelques jours observés.}
 \usage{
-forecast_m(data, date, x, unite = 1, decimal = 0, cumul = FALSE, mod = NULL)
+forecast_m(data, date, x, unite = 1, decimal = 0, cumul = FALSE, mod = "NULL")
 }
 \arguments{
 \item{data}{Un objet de type data.frame contenant au minimum la serie numerique et un vecteur de type date.}

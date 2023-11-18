@@ -24,17 +24,22 @@ NULL
 #' x <- rnorm(222, mean = 50, sd = 6.3)
 #' date <- seq.Date(as.Date("2023-01-01"), by = "day", len = 222)
 #' df <- data.frame(date, x)
-#' d_day(df, date = "2023-07-06", x = "x")
+#' dday(df, date = "2023-07-06", x = "x")
 #'
-d_day <- function(data,
-                  date,
-                  d = 0,
-                  x,
-                  unite = 1,
-                  decimal = 0) {
+dday <- function(data,
+                 date,
+                 d = 0,
+                 x,
+                 unite = 1,
+                 decimal = 0) {
 
-  stopifnot(is.data.frame(data), is.Date(as.Date(date)), is.numeric(d), is.numeric(data[, x]))
+  stopifnot(is.data.frame(data),
+            is.character(date) & is.Date(as.Date(date)),
+            is.numeric(d),
+            is.numeric(data[, x])
+            )
   stopifnot("date" %in% colnames(data), x %in% colnames(data))
+  stopifnot(length(date) == 1, length(d) == 1, length(unite) == 1, length(decimal) == 1)
 
   valeur <- data[data[, "date"] == as.Date(date) + d, x]
   valeur <- round(valeur/unite, decimal)

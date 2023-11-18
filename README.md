@@ -10,7 +10,7 @@
 
 Le but de iperform est de permettre aux utilisateurs de calculer les
 performances d’une série à une date (ou une période) donnée. On peut
-cite par exemple la performance *month-to-date : mtd* (respectivement
+citer par exemple la performance *month-to-date : mtd* (respectivement
 *year-to-date : ytd*) qui consiste à la somme des valeurs de la série
 partant du premier jour du mois (respectivement premier jour de l’année
 civil) jusqu’à date. Le package permet aussi à présenter des aperçu
@@ -43,7 +43,7 @@ df <- data.frame(date, x)
 
 # appel de la fonction mtd()
 mtd(df, date = "2023-08-04", x = "x", decimal = 2)
-#> [1] 199.89
+#> [1] 212.41
 ```
 
 Pour verifier, on peut afficher les valeurs qui ont été sommées et
@@ -52,18 +52,18 @@ verifier le calcul à la main :
 ``` r
 # mont-to-date au 4 août 2023 signifie les valeurs du 1er août au 4 août iclus
 df[(df[, "date"] >= "2023-08-01") & (df[, "date"] <= "2023-08-04"), "x"]
-#> [1] 39.80738 47.69184 54.11126 58.27626
+#> [1] 61.03714 55.75847 56.64705 38.97114
 ```
 
 ## Catégorie des fonctions
 
-Les fonctions de *iperform* se regroupent en cinq catégories :
+Les fonctions de *iperform* se regroupent en 4 catégories :
 
 - “les performances” qui renvoient les valeurs de la série en une date
-  ou une la somme sur une période donnée. On cite `d_day()`, `wtd()`,
+  ou une la somme sur une période donnée. On cite `dday()`, `wtd()`,
   `mtd()`, `ytd()` et `full_m()`.
 
-- “les apercus” qui renvoient des résumés sur la série en combinant les
+- “les aperçus” qui renvoient des résumés sur la série en combinant les
   variations comparées aux périodes antérieures de la série. On cite
   `overview()`
 
@@ -73,10 +73,6 @@ Les fonctions de *iperform* se regroupent en cinq catégories :
 - “les transformations” qui renvoient des nouveaux jeu des données créés
   après transformation de la série intiales. On cite `m_mean()`,
   `rva()`.
-
-- “les nettoyages” qui modifient les valeurs de la série en s’attanquant
-  aux valeurs atypiques telles que les valeurs manquantes, les valeurs
-  etrêmes, etc.
 
 ## Obtenir de l’aide
 

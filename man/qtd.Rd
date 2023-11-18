@@ -5,7 +5,7 @@
 \alias{qtd}
 \title{Calcul de la valeur qtd d'une serie.}
 \usage{
-qtd(data, date, q = 0, x, unite = 1, decimal = 0)
+qtd(data, date, q = 0, x, unite = 1, decimal = 0, cumul = FALSE)
 }
 \arguments{
 \item{data}{Un objet de type data.frame contenant au minimum la serie numerique et un vecteur de type date.}
@@ -19,6 +19,8 @@ qtd(data, date, q = 0, x, unite = 1, decimal = 0)
 \item{unite}{Un valeur de type numeric, definissant l'ordre d'echelle d'affisage du resultat de la fonction. Sa valeur par defaut est \code{1}.}
 
 \item{decimal}{Un objet de type numeric permettant de préciser le nombre d'entier à afficher après la virgule. Sa valeur par defaut est \code{0}.}
+
+\item{cumul}{Un objet de type logic qui permet d'indiquer si le vecteur \code{x} contient des valeurs cumulées. Sa valeur par defaut est \code{FALSE}.}
 }
 \value{
 Un vecteur de longieur 1.

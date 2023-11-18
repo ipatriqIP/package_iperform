@@ -14,6 +14,7 @@ NULL
 #' @param x Un vecteur de type numeric contenant les observations du phénomène à etudier.
 #' @param unite Un valeur de type numeric, definissant l'ordre d'echelle d'affisage du resultat de la fonction. Sa valeur par defaut est `1`.
 #' @param decimal Un objet de type numeric permettant de préciser le nombre d'entier à afficher après la virgule. Sa valeur par defaut est `0`.
+#' @param cumul Un objet de type logic qui permet d'indiquer si le vecteur `x` contient des valeurs cumulées. Sa valeur par defaut est `FALSE`.
 #'
 #' @return Un vecteur de longieur 1.
 #'
@@ -31,15 +32,40 @@ qtd <- function(data,
                 q = 0,
                 x,
                 unite = 1,
-                decimal = 0) {
+                decimal = 0,
+                cumul = FALSE) {
 
-  stopifnot(is.data.frame(data), is.Date(as.Date(date)), is.numeric(q), is.numeric(data[, x]))
+  stopifnot(is.data.frame(data),
+            is.character(date) & is.Date(as.Date(date)),
+            is.numeric(q),
+            is.numeric(data[, x]),
+            is.logical(cumul)
+            )
   stopifnot("date" %in% colnames(data), x %in% colnames(data))
+  stopifnot(length(date) == 1, length(unite) == 1, length(decimal) == 1)
 
   annee <- year(date)
   trimestre <- quarter(date) + q
 
-  valeur <- data[data[, "date"] == as.Date(date) + q, x]
+  b <- ifelse(leap_year(annee), 1, 0)
+  debut_trim <- ifelse(trimestre == 1, 1,
+                       ifelse(trimestre == 2, 91 + b,
+                              ifelse(trimestre == 3, 182 + b, 274 + b)))
+
+  jour_a <- yday(date)
+
+  data$annee <- year(data[, "date"])
+  data$trimestre <- quarter(data[, "date"])
+  data$jour_a <- yday(data[, "date"])
+
+
+  if (isTRUE(cumul)) {
+    valeur <- data[(data[, "annee"] == annee) & (data[, "trimestre"] == trimestre + q) & (data[, "jour_a"] == jour_a), x]
+    }
+  else {
+    valeur <- sum(data[(data[, "annee"] == annee) & (data[, "trimestre"] == trimestre) & (data[, "jour_a"] >= debut_trim) & (data[, "jour_a"] <= jour_a), x])
+    }
+
   valeur <- round(valeur/unite, decimal)
 
   return(valeur)

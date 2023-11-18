@@ -36,8 +36,9 @@ wtd <- function(data,
                 decimal = 0,
                 cumul = FALSE) {
 
-  stopifnot(is.data.frame(data), is.Date(as.Date(date)), is.numeric(w), is.numeric(data[, x]))
+  stopifnot(is.data.frame(data), is.character(date) & is.Date(as.Date(date)), is.numeric(w), is.numeric(data[, x]), is.logical(cumul))
   stopifnot("date" %in% colnames(data), x %in% colnames(data))
+  stopifnot(length(date) == 1, length(w) == 1, length(unite) == 1, length(decimal) == 1)
 
   annee <- year(date)
   num_s <- week(date) + w
@@ -48,7 +49,7 @@ wtd <- function(data,
   data$jour_s <- wday(data[, "date"], week_start = getOption("lubridate.week.start", 7))
 
   if (isTRUE(cumul)) {
-    valeur <- data[data[, "date"] == as.Date(date) + 7*w, x]
+    valeur <- data[(data[, "annee"] == annee) & (data[, "semaine"] == num_s + w) & (data[, "jour_s"] == num_j), x]
     }
   else {
     valeur <- sum(data[((data[, "annee"] == annee) & (data[, "semaine"] == num_s) & (data[, "jour_s"] >= 1) & (data[, "jour_s"] <= num_j)), x])

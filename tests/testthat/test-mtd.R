@@ -8,4 +8,7 @@ test_that("mtd works", {
   expect_identical(mtd(df, "2023-08-03", m = 0, x = "x"), 31)
   expect_identical(mtd(df, "2023-08-09", m = 0, x = "x"), 94)
 
+  expect_error(mtd(df, date = "2023-08-09", m = c(3, 5), x = "x"))
+  expect_error(mtd(df, date = 2023-08-09, m = 1, x = "x"))
+
   })

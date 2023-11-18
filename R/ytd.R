@@ -35,8 +35,9 @@ ytd <- function(data,
                 decimal = 0,
                 cumul = FALSE) {
 
-  stopifnot(is.data.frame(data), is.Date(as.Date(date)), is.numeric(a), is.numeric(data[, x]))
+  stopifnot(is.data.frame(data), is.character(date) & is.Date(as.Date(date)), is.numeric(a), is.numeric(data[, x]), is.logical(cumul))
   stopifnot("date" %in% colnames(data), x %in% colnames(data))
+  stopifnot(length(date) == 1, length(a) == 1, length(unite) == 1, length(decimal) == 1)
 
   annee <- year(date) + a
   jour_a <- yday(date)
@@ -45,7 +46,7 @@ ytd <- function(data,
   data$jour_a <- yday(data[, "date"])
 
   if (isTRUE(cumul)) {
-    valeur <- data[data[, "date"] == as.Date(date) + 365*a, x]
+    valeur <- data[(data[, "annee"] == annee + a) & (data[, "jour_a"] == jour_a), x]
     }
   else {
     valeur <- sum(data[(data[, "annee"] == annee) & (data[, "jour_a"] >= 1) & (data[, "jour_a"] <= jour_a), x])

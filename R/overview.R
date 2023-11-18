@@ -34,28 +34,36 @@ overview <- function(data,
                      decimal = 0,
                      cumul = FALSE) {
 
+  stopifnot(is.data.frame(data),
+            is.character(date) & is.Date(as.Date(date)),
+            is.numeric(data[, x]),
+            is.logical(cumul)
+            )
+  stopifnot("date" %in% colnames(data), x %in% colnames(data))
+  stopifnot(length(date) == 1, length(unite) == 1, length(decimal) == 1)
+
   Facteur <- x
 
-  D_Day <- d_day(data = data, date = date, d = 0, x = x)/unite
-  D_Day7 <- d_day(data = data, date = date, d = -7, x = x)/unite
-  WTD <- wtd(data = data, date = date, w = 0, x = x, cumul = cumul)/unite
-  WTD1 <- wtd(data = data, date = date, w = -1, x = x, cumul = cumul)/unite
-  MTD <- mtd(data = data, date = date, m = 0, x = x, cumul = cumul)/unite
-  MTD1 <- mtd(data = data, date = date, m = -1, x = x, cumul = cumul)/unite
-  Full_M <- full_m(data = data, date = date, x = x, cumul = cumul)/unite
-  FORECAST <- forecast_m(data = data, date = date, x = x)/unite
-  YTD <- ytd(data = data, date = date, a = 0, x = x, cumul = cumul)/unite
-  YTD1 <- ytd(data = data, date = date, a = -1, x = x, cumul = cumul)/unite
+  DDay <- dday(data = data, date = date, d = 0, x = x, unite = unite)
+  DDay7 <- dday(data = data, date = date, d = -7, x = x, unite = unite)
+  WTD <- wtd(data = data, date = date, w = 0, x = x, unite = unite, cumul = cumul)
+  WTD1 <- wtd(data = data, date = date, w = -1, x = x, unite = unite, cumul = cumul)
+  MTD <- mtd(data = data, date = date, m = 0, x = x, unite = unite, cumul = cumul)
+  MTD1 <- mtd(data = data, date = date, m = -1, x = x, unite = unite, cumul = cumul)
+  Full_M <- full_m(data = data, date = date, x = x, unite = unite, cumul = cumul)
+  FORECAST <- forecast_m(data = data, date = date, x = x, unite = unite)
+  YTD <- ytd(data = data, date = date, a = 0, x = x, unite = unite, cumul = cumul)
+  YTD1 <- ytd(data = data, date = date, a = -1, x = x, unite = unite, cumul = cumul)
 
-  DoD = round((D_Day/D_Day7 - 1)*100, decimal)
-  WoW = round((WTD/WTD1 - 1)*100, decimal)
-  SPLM = round((MTD/MTD1 - 1)*100, decimal)
-  MoM = round((FORECAST/Full_M - 1)*100, decimal)
-  YoY = round((YTD/YTD1 - 1)*100, decimal)
+  DoD <- round((DDay/DDay7 - 1)*100, decimal)
+  WoW <- round((WTD/WTD1 - 1)*100, decimal)
+  SPLM <- round((MTD/MTD1 - 1)*100, decimal)
+  MoM <- round((FORECAST/Full_M - 1)*100, decimal)
+  SPLY <- round((YTD/YTD1 - 1)*100, decimal)
 
-  tableau = data.frame(Facteur, D_Day7, D_Day, DoD, WTD1, WTD, WoW, MTD1, MTD, SPLM, Full_M, FORECAST, MoM, YTD1, YTD, YoY)
-  tableau[is.na(tableau)] = 0
+  df <- data.frame(Facteur, DDay7, DDay, DoD, WTD1, WTD, WoW, MTD1, MTD, SPLM, Full_M, FORECAST, MoM, YTD1, YTD, SPLY)
+  df[is.na(df)] <- 0
 
-  return(tableau)
+  return(df)
 
   }

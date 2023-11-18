@@ -7,4 +7,6 @@ test_that("wtd works", {
   expect_identical(wtd(df, "2023-08-02", x = "x"), 23)
   expect_identical(wtd(df, "2023-08-09", w = 0, x = "x"), 45)
 
+  expect_error(wtd(df, date = "2023-08-05", x = "x", unite = c(3, 5)))
+
   })

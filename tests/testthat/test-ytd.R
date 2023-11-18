@@ -8,4 +8,9 @@ test_that("ytd works", {
   expect_identical(ytd(df, "2023-08-05", x = "x"), 49)
   expect_identical(ytd(df, "2023-08-09", x = "x"), 94)
 
+  expect_equal(ytd(df, "2023-08-01", x = "x"), mtd(df, "2023-08-01", x = "x"))
+  expect_equal(ytd(df, "2023-08-01", x = "x"), dday(df, "2023-08-01", x = "x"))
+
+  expect_error(ytd(df, date = c("2023-08-01", "2023-08-02"), x = "x"))
+
   })

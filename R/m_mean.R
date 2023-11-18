@@ -30,8 +30,11 @@ m_mean <- function(data,
                    unite = 1,
                    decimal = 0) {
 
-  stopifnot(is.data.frame(data), is.numeric(data[, x]))
+  stopifnot(is.data.frame(data),
+            is.numeric(data[, x])
+            )
   stopifnot("date" %in% colnames(data), x %in% colnames(data))
+  stopifnot(length(unite) == 1, length(decimal) == 1)
 
   data$annee <- year(data[, "date"])
   data$jour_a <- yday(data[, "date"])

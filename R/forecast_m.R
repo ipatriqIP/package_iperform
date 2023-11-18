@@ -34,10 +34,16 @@ forecast_m <- function(data,
                        unite = 1,
                        decimal = 0,
                        cumul = FALSE,
-                       mod = NULL) {
+                       mod = "NULL") {
 
-  stopifnot(is.data.frame(data), is.Date(as.Date(date)), is.numeric(data[, x]))
+  stopifnot(is.data.frame(data),
+            is.character(date) & is.Date(as.Date(date)),
+            is.numeric(data[, x]),
+            is.logical(cumul),
+            is.character(mod)
+            )
   stopifnot("date" %in% colnames(data), x %in% colnames(data))
+  stopifnot(length(date) == 1, length(unite) == 1, length(decimal) == 1, length(mod) == 1)
 
   annee <- year(date)
   mois <- month(date)
@@ -54,11 +60,11 @@ forecast_m <- function(data,
   jour_r <- nb_jr - jour_m
   MTD <- mtd(data, date = date, x = x, cumul = cumul)
 
-  if (is.null(mod)) {
+  if (mod == "NULL") {
     valeur <- MTD + (MTD/jour_m*jour_r)
     }
   else {
-    valeur <- MTD + (mod)
+    valeur <- MTD + (MTD/jour_m*jour_r)
     }
 
   valeur <- round(valeur/unite, decimal)
