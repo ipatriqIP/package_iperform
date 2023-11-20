@@ -43,7 +43,7 @@ df <- data.frame(date, x)
 
 # appel de la fonction mtd()
 mtd(df, date = "2023-08-04", x = "x", decimal = 2)
-#> [1] 212.41
+#> [1] 181.89
 ```
 
 Pour verifier, on peut afficher les valeurs qui ont été sommées et
@@ -52,7 +52,7 @@ verifier le calcul à la main :
 ``` r
 # mont-to-date au 4 août 2023 signifie les valeurs du 1er août au 4 août iclus
 df[(df[, "date"] >= "2023-08-01") & (df[, "date"] <= "2023-08-04"), "x"]
-#> [1] 61.03714 55.75847 56.64705 38.97114
+#> [1] 44.06849 34.18328 52.45607 51.17766
 ```
 
 ## Catégorie des fonctions
@@ -71,7 +71,7 @@ Les fonctions de *iperform* se regroupent en 4 catégories :
   en des dates futures. On cite `forecast_m()`.
 
 - “les transformations” qui renvoient des nouveaux jeu des données créés
-  après transformation de la série intiales. On cite `m_mean()`,
+  après transformation de la série intiales. On cite `mean_m()`,
   `rva()`.
 
 ## Obtenir de l’aide

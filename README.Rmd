@@ -20,10 +20,10 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-Le but de iperform est de permettre aux utilisateurs de calculer les performances d'une série à une date (ou une période) donnée. On peut citer par exemple la performance *month-to-date : mtd* (respectivement *year-to-date : ytd*) qui consiste à la somme des valeurs de la série partant du premier jour du mois (respectivement premier jour de l’année civil) jusqu’à date. Le package permet aussi à présenter des aperçu global d'une série différemment de ce que presente par exemple les fonctions *summary()* et *summarise()*.
+Le but de iperform est de permettre aux utilisateurs de calculer les performances d'une série à une date (ou une période) donnée. On peut citer par exemple la performance *month-to-date : mtd* (respectivement *year-to-date : ytd*) qui consiste à la somme des valeurs de la série partant du premier jour du mois (respectivement premier jour de l’année civil) jusqu’à date. Le package permet aussi à présenter des aperçu global d'une série différemment de ce que presente par exemple la fonction *summary()*.
 
 
-Apprenez-en plus sur les fonctions de iperform dans `vignette("iperfom")`.
+Apprenez-en plus sur les fonctions de iperform dans `vignette("iperform")`.
 
 ## Installation
 
@@ -31,6 +31,16 @@ L'installation est très simple, comme le montre les codes ci-dessous :
 
 ```{r, eval=FALSE}
 install.packages("iperform")
+
+```
+
+On peut installer le package depuis ce repository GitHub :
+
+```{r}
+if(!require(devtools)) {
+  install.packages("devtools")
+  }
+devtools::install_github("ipatriqIP/package_iperform")
 
 ```
 
@@ -73,7 +83,7 @@ Les fonctions de *iperform* se regroupent en 4 catégories :
 
 * "les previsions" qui renvoient les estimations de valeurs de la série en des dates futures. On cite `forecast_m()`.
 
-* "les transformations" qui renvoient des nouveaux jeu des données créés après transformation de la série intiales. On cite `m_mean()`, `rva()`. 
+* "les transformations" qui renvoient des nouveaux jeu des données créés après transformation de la série intiales. On cite `mean_m()`, `rva()`. 
 
 
 

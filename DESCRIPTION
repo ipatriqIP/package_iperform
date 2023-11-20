@@ -3,7 +3,7 @@ Title: Performance
 Version: 0.0.0.9001
 Authors@R: c(
     person("Patrick", "ILUNGA", , "contact@ip-ilunga.com", role = c("aut", "cre")),
-    person("Prénom d'un contributeur", "Nom d'un contributeur", role = "ctb"),
+    person("Patrick", "ILUNGA", role = "ctb"),
     person(, "ILUNGA BUABUA", role = "cph")
   )
 Description: Calcule la performance d'une série temporelle sur une période bien spécifique.

@@ -3,7 +3,7 @@
 export(dday)
 export(forecast_m)
 export(full_m)
-export(m_mean)
+export(mean_m)
 export(mtd)
 export(overview)
 export(qtd)

@@ -67,9 +67,9 @@ Le package *iperform*, couplé avec le package R *lubridate* offre en cette prem
 
 ### les transformations
 
-* `m_mean()`qui renvoie un nouveau jeu des données créé après transformation de la série intiales. 
+* `mean_m()`qui renvoie un nouveau jeu des données créé après transformation de la série intiales. 
 
-* `rva()` qui renvoie les effets expliquant la vartiation d'une série par rapport aux autres séries sur la même période.
+
 
 Dans cette vignette, on présente les mecanismes des calculs derrière ces fonctions.
 

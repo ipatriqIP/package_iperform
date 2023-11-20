@@ -23,18 +23,16 @@ NULL
 #' x <- rnorm(222, mean = 50, sd = 6.3)
 #' date <- seq.Date(as.Date("2023-01-01"), by = "day", length.out = 222)
 #' df <- data.frame(date, x)
-#' m_mean(df, x = "x")
+#' mean_m(df, x = "x")
 #'
-m_mean <- function(data,
+mean_m <- function(data,
                    x,
                    unite = 1,
                    decimal = 0) {
 
-  stopifnot(is.data.frame(data),
-            is.numeric(data[, x])
-            )
+  stopifnot(is.data.frame(data), length(unite) == 1, length(decimal) == 1)
   stopifnot("date" %in% colnames(data), x %in% colnames(data))
-  stopifnot(length(unite) == 1, length(decimal) == 1)
+  stopifnot(is.numeric(data[, x]), is.Date(data[, "date"]))
 
   data$annee <- year(data[, "date"])
   data$jour_a <- yday(data[, "date"])
@@ -64,14 +62,17 @@ m_mean <- function(data,
 
     }
 
-  #d = max(data[, "date"])
-  #year(d) = max(annee)
+  d <- as.Date("2000-01-01")
+  annee_max <- as.numeric(max(annee))
+  lubridate::year(d) <- annee_max
 
   df_mb <- as.data.frame(round(mat/unite, decimal))
-  date <- seq.Date(as.Date("2023-01-01"), by = "day", length.out = 365)
+  date <- seq.Date(d, by = "day", length.out = 365)
   Min <- round(rowMins(mat, na.rm = TRUE), decimal)
   Max <- round(rowMaxs(mat, na.rm = TRUE), decimal)
   df_mb <- cbind.data.frame(date, Min, df_mb, Max)
+
+  df_mb = df_mb[df_mb$Min != Inf, ]
 
   return(df_mb)
 
