@@ -15,7 +15,6 @@ Calcule la performance d'une série temporelle sur une période bien spécifique
 
 Other contributors:
 \itemize{
-  \item Patrick ILUNGA [contributor]
   \item  ILUNGA BUABUA [copyright holder]
 }
 

@@ -5,23 +5,25 @@
 \alias{mean_m}
 \title{Calcul de la moyenne mobile sur 7 jour.}
 \usage{
-mean_m(data, x, unite = 1, decimal = 0)
+mean_m(data, x, unite = 1, decimal = 0, borne = TRUE)
 }
 \arguments{
 \item{data}{Un objet de type data.frame contenant au minimum la serie numerique et un vecteur de type date.}
 
 \item{x}{Un vecteur de type numeric contenant les observations du phénomène à etudier.}
 
-\item{unite}{Un valeur de type numeric, definissant l'ordre d'echelle d'affisage du resultat de la fonction. Sa valeur par defaut est \code{1}.}
+\item{unite}{Une valeur de type numeric, definissant l'ordre d'echelle d'affisage du resultat de la fonction. Sa valeur par defaut est \code{1}.}
 
 \item{decimal}{Un objet de type numeric permettant de préciser le nombre d'entier à afficher après la virgule. Sa valeur par defaut est \code{0}.}
+
+\item{borne}{Une valeur de type logic permettant de preciser si les valeurs renvoyées doivent avoir le minimum et le maximum pour chauqe dqte. Sa valeur par defaut est \code{TRUE}.}
 }
 \value{
-Un Data.frame content \code{n + 3} colonnes, dont \code{n} vaut le nombre disctinct des années que contient la variable date et de \code{365} lignes.
+Un Data.frame content \code{n + 3} colonnes, dont \code{n} vaut le nombre disctinct des années que contient la variable date.
 }
 \description{
 Cette fonction permet de transformer une série par une nouvelle série dont chaque terme vaut la moyenne de 6 dernier y compris le terme lui même.
-Cette fonction sera ameliorer dans les versions à venir.
+Cette fonction sera améliorer dans les versions à venir.
 }
 \examples{
 x <- rnorm(222, mean = 50, sd = 6.3)

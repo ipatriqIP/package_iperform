@@ -7,14 +7,15 @@ NULL
 #' Calcul de la moyenne mobile sur 7 jour.
 #'
 #' Cette fonction permet de transformer une série par une nouvelle série dont chaque terme vaut la moyenne de 6 dernier y compris le terme lui même.
-#' Cette fonction sera ameliorer dans les versions à venir.
+#' Cette fonction sera améliorer dans les versions à venir.
 #'
 #' @param data Un objet de type data.frame contenant au minimum la serie numerique et un vecteur de type date.
 #' @param x Un vecteur de type numeric contenant les observations du phénomène à etudier.
-#' @param unite Un valeur de type numeric, definissant l'ordre d'echelle d'affisage du resultat de la fonction. Sa valeur par defaut est `1`.
+#' @param unite Une valeur de type numeric, definissant l'ordre d'echelle d'affisage du resultat de la fonction. Sa valeur par defaut est `1`.
 #' @param decimal Un objet de type numeric permettant de préciser le nombre d'entier à afficher après la virgule. Sa valeur par defaut est `0`.
+#' @param borne Une valeur de type logic permettant de preciser si les valeurs renvoyées doivent avoir le minimum et le maximum pour chauqe dqte. Sa valeur par defaut est `TRUE`.
 #'
-#' @return Un Data.frame content `n + 3` colonnes, dont `n` vaut le nombre disctinct des années que contient la variable date et de `365` lignes.
+#' @return Un Data.frame content `n + 3` colonnes, dont `n` vaut le nombre disctinct des années que contient la variable date.
 #'
 #' @encoding UTF-8
 #' @export
@@ -28,7 +29,8 @@ NULL
 mean_m <- function(data,
                    x,
                    unite = 1,
-                   decimal = 0) {
+                   decimal = 0,
+                   borne = TRUE) {
 
   stopifnot(is.data.frame(data), length(unite) == 1, length(decimal) == 1)
   stopifnot("date" %in% colnames(data), x %in% colnames(data))
@@ -74,6 +76,11 @@ mean_m <- function(data,
 
   df_mb = df_mb[df_mb$Min != Inf, ]
 
-  return(df_mb)
+  if(isTRUE(borne)) {
+    df_mb
+    }
+  else {
+    df_mb[, !colnames(df_mb) %in% c("Min", "Max")]
+    }
 
   }
