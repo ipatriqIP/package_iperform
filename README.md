@@ -26,10 +26,10 @@ Apprenez-en plus sur les fonctions de iperform dans
 
 ## Installation
 
-L’installation est très simple, comme le montre les codes ci-dessous :
+L’installation est très simple, depuis CRAN :
 
 ``` r
-install.packages("iperform")
+install.packages("iperform", dependencies = TRUE)
 ```
 
 On peut installer le package depuis ce repository GitHub :
@@ -57,7 +57,7 @@ df <- data.frame(date, x)
 
 # appel de la fonction mtd()
 mtd(df, date = "2023-08-04", x = "x", decimal = 2)
-#> [1] 209.4
+#> [1] 200.27
 ```
 
 Pour verifier, on peut afficher les valeurs qui ont été sommées et
@@ -66,11 +66,11 @@ verifier le calcul à la main :
 ``` r
 # mont-to-date au 4 août 2023 signifie les valeurs du 1er août au 4 août iclus
 df[(df[, "date"] >= "2023-08-01") & (df[, "date"] <= "2023-08-04"), "x"]
-#> [1] 50.93049 51.28811 58.65963 48.51939
+#> [1] 54.83446 44.32045 55.04030 46.07905
 
 # La somme de ces valeurs
 round(sum(df[(df[, "date"] >= "2023-08-01") & (df[, "date"] <= "2023-08-04"), "x"]), 2)
-#> [1] 209.4
+#> [1] 200.27
 ```
 
 ## Catégorie des fonctions
