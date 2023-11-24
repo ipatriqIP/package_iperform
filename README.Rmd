@@ -13,9 +13,12 @@ knitr::opts_chunk$set(
 )
 ```
 
+
 # iperform <a href="https://ip-ilunga.com"><img src="man/figures/logo.png" align="right" height="138" alt="ip ilunga" /></a>
 
 <!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/ipatriqIP/package_iperform/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ipatriqIP/package_iperform/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Introduction
@@ -36,7 +39,7 @@ install.packages("iperform")
 
 On peut installer le package depuis ce repository GitHub :
 
-```{r}
+```{r, eval=FALSE}
 if(!require(devtools)) {
   install.packages("devtools")
   }
@@ -70,6 +73,9 @@ Pour verifier, on peut afficher les valeurs qui ont été sommées et verifier l
 # mont-to-date au 4 août 2023 signifie les valeurs du 1er août au 4 août iclus
 df[(df[, "date"] >= "2023-08-01") & (df[, "date"] <= "2023-08-04"), "x"]
 
+# La somme de ces valeurs
+round(sum(df[(df[, "date"] >= "2023-08-01") & (df[, "date"] <= "2023-08-04"), "x"]), 2)
+
 ```
 
 
@@ -77,13 +83,13 @@ df[(df[, "date"] >= "2023-08-01") & (df[, "date"] <= "2023-08-04"), "x"]
 
 Les fonctions de *iperform* se regroupent en 4 catégories :
 
-* "les performances" qui renvoient les valeurs de la série en une date ou une la somme sur une période donnée. On cite `dday()`, `wtd()`, `mtd()`, `ytd()` et `full_m()`.
+* "les performances" qui renvoient les valeurs de la série en une date ou une la somme sur une période donnée. On cite les fonctions `dday()`, `wtd()`, `mtd()`, `ytd()` et `full_m()`.
 
-* "les aperçus" qui renvoient des résumés sur la série en combinant les variations comparées aux périodes antérieures de la série. On cite `overview()`
+* "les aperçus" qui renvoient des résumés sur la série en combinant les variations comparées aux périodes antérieures de la série. On cite la fonction `overview()`
 
-* "les previsions" qui renvoient les estimations de valeurs de la série en des dates futures. On cite `forecast_m()`.
+* "les previsions" qui renvoient les estimations de valeurs de la série en des dates futures. On cite la fonction `forecast_m()`.
 
-* "les transformations" qui renvoient des nouveaux jeu des données créés après transformation de la série intiales. On cite `mean_m()`, `rva()`. 
+* "les transformations" qui renvoient des nouveaux jeu des données créés après transformation de la série intiales. On cite la fonction `mean_m()`. 
 
 
 

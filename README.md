@@ -4,6 +4,10 @@
 # iperform <a href="https://ip-ilunga.com"><img src="man/figures/logo.png" align="right" height="138" alt="ip ilunga" /></a>
 
 <!-- badges: start -->
+
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/ipatriqIP/package_iperform/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ipatriqIP/package_iperform/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Introduction
@@ -14,11 +18,11 @@ citer par exemple la performance *month-to-date : mtd* (respectivement
 *year-to-date : ytd*) qui consiste à la somme des valeurs de la série
 partant du premier jour du mois (respectivement premier jour de l’année
 civil) jusqu’à date. Le package permet aussi à présenter des aperçu
-global d’une série différemment de ce que presente par exemple les
-fonctions *summary()* et *summarise()*.
+global d’une série différemment de ce que presente par exemple la
+fonction *summary()*.
 
 Apprenez-en plus sur les fonctions de iperform dans
-`vignette("iperfom")`.
+`vignette("iperform")`.
 
 ## Installation
 
@@ -26,6 +30,15 @@ L’installation est très simple, comme le montre les codes ci-dessous :
 
 ``` r
 install.packages("iperform")
+```
+
+On peut installer le package depuis ce repository GitHub :
+
+``` r
+if(!require(devtools)) {
+  install.packages("devtools")
+  }
+devtools::install_github("ipatriqIP/package_iperform")
 ```
 
 ## Example
@@ -43,7 +56,7 @@ df <- data.frame(date, x)
 
 # appel de la fonction mtd()
 mtd(df, date = "2023-08-04", x = "x", decimal = 2)
-#> [1] 181.89
+#> [1] 194.24
 ```
 
 Pour verifier, on peut afficher les valeurs qui ont été sommées et
@@ -52,7 +65,11 @@ verifier le calcul à la main :
 ``` r
 # mont-to-date au 4 août 2023 signifie les valeurs du 1er août au 4 août iclus
 df[(df[, "date"] >= "2023-08-01") & (df[, "date"] <= "2023-08-04"), "x"]
-#> [1] 44.06849 34.18328 52.45607 51.17766
+#> [1] 41.25149 57.25920 46.08393 49.64282
+
+# La somme de ces valeurs
+round(sum(df[(df[, "date"] >= "2023-08-01") & (df[, "date"] <= "2023-08-04"), "x"]), 2)
+#> [1] 194.24
 ```
 
 ## Catégorie des fonctions
@@ -60,19 +77,19 @@ df[(df[, "date"] >= "2023-08-01") & (df[, "date"] <= "2023-08-04"), "x"]
 Les fonctions de *iperform* se regroupent en 4 catégories :
 
 - “les performances” qui renvoient les valeurs de la série en une date
-  ou une la somme sur une période donnée. On cite `dday()`, `wtd()`,
-  `mtd()`, `ytd()` et `full_m()`.
+  ou une la somme sur une période donnée. On cite les fonctions
+  `dday()`, `wtd()`, `mtd()`, `ytd()` et `full_m()`.
 
 - “les aperçus” qui renvoient des résumés sur la série en combinant les
-  variations comparées aux périodes antérieures de la série. On cite
-  `overview()`
+  variations comparées aux périodes antérieures de la série. On cite la
+  fonction `overview()`
 
 - “les previsions” qui renvoient les estimations de valeurs de la série
-  en des dates futures. On cite `forecast_m()`.
+  en des dates futures. On cite la fonction `forecast_m()`.
 
 - “les transformations” qui renvoient des nouveaux jeu des données créés
-  après transformation de la série intiales. On cite `mean_m()`,
-  `rva()`.
+  après transformation de la série intiales. On cite la fonction
+  `mean_m()`.
 
 ## Obtenir de l’aide
 
