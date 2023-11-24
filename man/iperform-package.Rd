@@ -11,7 +11,7 @@
 Calcule la performance d'une série temporelle sur une période bien spécifique.
 }
 \author{
-\strong{Maintainer}: Patrick ILUNGA \email{contact@ip-ilunga.com}
+\strong{Maintainer}: Patrick ILUNGA \email{patrick.ilunga@unikin.ac.cd}
 
 Other contributors:
 \itemize{
