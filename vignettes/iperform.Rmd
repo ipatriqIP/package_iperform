@@ -46,8 +46,7 @@ Ces concepts représentent à eux seuls près de 90% de l’information de pilot
 
 Cette vignette décrit l'utilisation des differentes fonctions offertes par le package *iperfom* pour répondre à ce besoin devenu de plus en plus important avec la révolution des données.
 
-
-Le package *iperform*, couplé avec le package R *lubridate* offre en cette prémière version les principales fonctions que voici regroupées en quatre (4) catégories :
+Le package *iperform* est une boite à outil qui permet de calculer les performances d’une série temporelle en une date ou sur une période bien spécifique. Couplé avec le package R *lubridate*, le package offre en cette prémière version les principales fonctions que voici regroupées en quatre (4) catégories :
 
 ### Les performances
 

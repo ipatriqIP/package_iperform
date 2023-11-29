@@ -4,18 +4,18 @@
 \name{iperform-package}
 \alias{iperform}
 \alias{iperform-package}
-\title{iperform: Performances d'une série temporelle}
+\title{iperform: Time Series Performance}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Un outil pour calculer les performances d’une série temporelle en une date ou sur une période bien spécifique. Il est plus destiné à l’analyse des données dans les domaines financier, bancaire, télécommunication ou marketing opérationnel.
+A tool to calculate the performance of a time series in a specific date or period. It is more intended for data analysis in the fields of finance, banking, telecommunications or operational marketing.
 }
 \author{
-\strong{Maintainer}: Patrick Iunga \email{patrick.ilunga@unikin.ac.cd}
+\strong{Maintainer}: Patrick Ilunga \email{patrick.ilunga@unikin.ac.cd}
 
 Other contributors:
 \itemize{
-  \item  Iunga Buabua Patrick [copyright holder]
+  \item  Ilunga Buabua Patrick [copyright holder]
 }
 
 }
