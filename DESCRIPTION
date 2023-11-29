@@ -1,11 +1,11 @@
 Package: iperform
-Title: Performance
-Version: 0.0.0.9001
+Title: Performances d'une série temporelle
+Version: 0.0.1
 Authors@R: c(
-    person("Patrick", "ILUNGA", , "patrick.ilunga@unikin.ac.cd", role = c("aut", "cre")),
-    person(, "ILUNGA BUABUA", role = "cph")
+    person("Patrick", "Iunga", , "patrick.ilunga@unikin.ac.cd", role = c("aut", "cre")),
+    person(, "Iunga Buabua Patrick", role = "cph")
   )
-Description: Calcule la performance d'une série temporelle sur une période bien spécifique.
+Description: Un outil pour calculer les performances d’une série temporelle en une date ou sur une période bien spécifique. Il est plus destiné à l’analyse des données dans les domaines financier, bancaire, télécommunication ou marketing opérationnel.
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -19,7 +19,7 @@ Config/testthat/edition: 3
 Imports: 
     lubridate,
     matrixStats
-Language: fr
+Language: en, fr
 VignetteBuilder: knitr
 LazyData: true
 Depends: 

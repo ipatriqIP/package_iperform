@@ -1,11 +1,11 @@
-# iperform (development version)
+# iperform 0.0.1
 
 * Initial CRAN submission.
 
                                   
-## version 0.0.0.9000"               
+## version 0.0.1"               
 ""                                    
-"---"                                 
+"Version initiale"                                 
 ""                                    
 ### NEWS.md setup"                   
 ""                                    
