@@ -13,13 +13,13 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 ## Introduction
 
 Le but de iperform est de permettre aux utilisateurs de calculer les
-performances d’une série à une date ou une période donnée. On peut citer
-par exemple la performance *month-to-date : mtd* (respectivement
-*year-to-date : ytd*) qui consiste à la somme des valeurs de la série
-partant du premier jour du mois (respectivement premier jour de l’année
-civil) jusqu’à date. Le package permet également de présenter un aperçu
-global d’une série différemment de ce qu’on a par exemple avec la
-fonction *summary()*.
+performances d’une série temporelle à une date ou une période donnée. On
+peut citer par exemple la performance *month-to-date : mtd*
+(respectivement *year-to-date : ytd*) qui consiste à la somme des
+valeurs de la série partant du premier jour du mois (respectivement
+premier jour de l’année civil) jusqu’à date. Le package permet également
+de présenter un aperçu global d’une série temporelle différemment de ce
+qu’on a par exemple avec la fonction *summary()*.
 
 Apprenez-en plus sur les fonctions de iperform dans
 `vignette("iperform")`.
@@ -44,7 +44,7 @@ devtools::install_github("ipatriqIP/package_iperform")
 ## Example
 
 Voici un exmple simple sur l’utilisation de la fonction `mtd()` si l’on
-veut avoir la performance *month-to-date* en date du *04 août 2023* :
+veut calculer la performance *month-to-date* en date du *04 août 2023* :
 
 ``` r
 # importation du package
@@ -57,7 +57,7 @@ df <- data.frame(date, x)
 
 # appel de la fonction mtd()
 mtd(df, date = "2023-08-04", x = "x", decimal = 2)
-#> [1] 200.08
+#> [1] 196.27
 ```
 
 Pour verifier, on peut afficher les valeurs qui ont été sommées et
@@ -66,11 +66,11 @@ verifier le calcul à la main :
 ``` r
 # mont-to-date au 4 août 2023 signifie les valeurs du 1er août au 4 août iclus
 df[(df[, "date"] >= "2023-08-01") & (df[, "date"] <= "2023-08-04"), "x"]
-#> [1] 47.88234 49.16970 43.72208 59.31014
+#> [1] 41.55926 54.19192 48.78411 51.73337
 
 # La somme de ces valeurs
 round(sum(df[(df[, "date"] >= "2023-08-01") & (df[, "date"] <= "2023-08-04"), "x"]), 2)
-#> [1] 200.08
+#> [1] 196.27
 ```
 
 ## Catégorie des fonctions
@@ -79,11 +79,12 @@ Les fonctions de *iperform* se regroupent en 4 catégories :
 
 - “Les performances” qui renvoient les valeurs de la série en une date
   ou une la somme sur une période donnée. On cite les fonctions
-  `dday()`, `wtd()`, `mtd()`, `qtd()`, `ytd()` et `full_m()`.
+  `dday()`, `wtd()`, `mtd()`, `qtd()`, `htd()`, `ytd()`, `full_w()`,
+  `full_m()`, `full_q()`, `full_h()` et `full_y()`.
 
 - “Les aperçus” qui renvoient des résumés sur la série en combinant les
   variations comparées aux périodes antérieures de la série. On cite la
-  fonction `overview()`
+  fonction `overview()`.
 
 - “Les previsions” qui renvoient les estimations de valeurs de la série
   en des dates futures. On cite la fonction `forecast_m()`.

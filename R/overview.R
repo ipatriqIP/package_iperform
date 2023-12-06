@@ -59,9 +59,9 @@ overview <- function(data,
   WoW <- round((WTD/WTD1 - 1)*100, decimal)
   SPLM <- round((MTD/MTD1 - 1)*100, decimal)
   MoM <- round((FORECAST/Full_M - 1)*100, decimal)
-  SPLY <- round((YTD/YTD1 - 1)*100, decimal)
+  YoY <- round((YTD/YTD1 - 1)*100, decimal)
 
-  df <- data.frame(Facteur, DDay7, DDay, DoD, WTD1, WTD, WoW, MTD1, MTD, SPLM, Full_M, FORECAST, MoM, YTD1, YTD, SPLY)
+  df <- data.frame(Facteur, DDay7, DDay, DoD, WTD1, WTD, WoW, MTD1, MTD, SPLM, Full_M, FORECAST, MoM, YTD1, YTD, YoY)
   df[is.na(df)] <- 0
 
   return(df)

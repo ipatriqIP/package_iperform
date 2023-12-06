@@ -41,10 +41,10 @@ $x_1$ correspond à la valeur de la série au 1er jour de la semaine, et $x_n$ �
 
 On peut egalement parler des concepts de *day-to-date* (pour la durée écoulée au cours d'une journée pour ceux qui suivent l’activité par heure) ou *quater-to-date* (pour le résultat cumulé sur un trimestre) ou encore *full month*, *full year*, etc pour designer la totalité de la periode indiquée.
 
-Ces concepts représentent à eux seuls près de 90% de l’information de pilotage des activités des analystes du secteur bancaire, bourse, télécommunication avant d'arriver à la modélisation et la prédiction des résultats futurs. Avec la révolution des solutions Big Data sur la visualisation des données, plusieurs tableaux de bord utilisent ces concepts en combinaison avec les variations par rapport aux dates ou periodes antérieures pour enrichir l'histoire lors de la présentation des données, des résultats ou de la performance de l’activité.
+Ces concepts représentent à eux seuls près de 90% de l’information de pilotage des activités des analystes du secteur bancaire, bourse, télécommunication avant d'arriver à la modélisation et la prédiction des résultats futurs. Avec la révolution des solutions Big Data sur la visualisation des données, plusieurs tableaux de bord utilisent ces concepts en combinaison avec les variations par rapport aux dates ou périodes antérieures pour enrichir l'histoire lors de la présentation des données, des résultats ou de la performance de l’activité.
 
 
-Cette vignette décrit l'utilisation des differentes fonctions offertes par le package *iperfom* pour répondre à ce besoin devenu de plus en plus important avec la révolution des données.
+Cette vignette décrit l'utilisation des differentes fonctions offertes par le package *iperform* pour répondre à ce besoin devenu de plus en plus important avec la révolution des données.
 
 Le package *iperform* est une boite à outil qui permet de calculer les performances d’une série temporelle en une date ou sur une période bien spécifique. Couplé avec le package R *lubridate*, le package offre en cette prémière version les principales fonctions que voici regroupées en quatre (4) catégories :
 
@@ -58,9 +58,19 @@ Le package *iperform* est une boite à outil qui permet de calculer les performa
 
 * `qtd()` qui renvoie la somme des valeurs de la série depuis le début du trimestre correspondant à la date renseignée en argurment,
 
+* `htd()` qui renvoie la somme des valeurs de la série depuis le début du semestre correspondant à la date renseignée en argurment,
+
 * `ytd()` qui renvoie la somme des valeurs de la série depuis le début de l’année correspondante à la date renseignée en argurment,
 
-* `full_m()` qui renvoie la somme des valeurs de la série depuis sur tout le mois correspondant à la date renseignée en argurment.
+* `full_w()` qui renvoie la somme des valeurs de la série depuis sur tout la semaine correspondant à la date renseignée en argurment,
+
+* `full_m()` qui renvoie la somme des valeurs de la série depuis sur tout le mois correspondant à la date renseignée en argurment,
+
+* `full_q()` qui renvoie la somme des valeurs de la série depuis sur tout le trimestre correspondant à la date renseignée en argurment,
+
+* `full_h()` qui renvoie la somme des valeurs de la série depuis sur tout le semestre correspondant à la date renseignée en argurment,
+
+* `full_y()` qui renvoie la somme des valeurs de la série depuis sur toute l’année correspondant à la date renseignée en argurment,
 
 
 ### Les aperçus
@@ -132,6 +142,9 @@ summary(voix_mobile)
 
 La variable *Revenu* sur quoi on va se focaliser varie de `r min(voix_mobile$Revenu)` usd à `r max(voix_mobile$Revenu)` usd, avec une moyenne de `r mean(voix_mobile$Revenu)` usd. Elle a une variance de `r round(var(voix_mobile$Revenu))` et un écart type de `r round(sd(voix_mobile$Revenu))`. La valeur de *p-value < 0,05* de la sortie du test de normalité de Shapiro ci-dessous indique que la distribution des données est significativement différente de la distribution normale. Voilà le peu qu'on puisse dire, hormis les représentations graphiques sur ce qui est de la description de cette série.
 
+Le phénomène est observé entre le `r min(voix_mobile$date)` et le `r max(voix_mobile$date)`.
+
+
 
 ```{r}
 shapiro.test(voix_mobile$Revenu)
@@ -165,6 +178,20 @@ Les arguments de la fonction
 * `unite` un numeric qui renseigne l'echel des valeurs qu'on souhaite avoir.  sa valeur par defaut vaut `1`. Si `unite=1000`, la fonction va renvoyer une valeur diviser par `1000`, et
 
 * `decimal` un entier designant le nombre de chiffre après la virgule qu'on souhaite afficher si le résultat est un decimal. Sa valeur par défaut vaut `0`.
+
+
+La fonction renvoit la valeur `0` si la date renseignée par l'utilisateur ne fait pas partie des dates de la série, à l'exemple de la du *11 decembre 2023*:
+
+```{r}
+dday(data = voix_mobile,
+      date = "2023-12-11",
+      d = 0,
+      x = "Revenu",
+      unite = 1,
+      decimal = 0)
+
+```
+
 
 
 ### 2. La fonction *mtd()*
@@ -293,20 +320,27 @@ Mais au moins, on constate que pour ce modèle, plus on donne en argument une da
 
 ### 7. La fonction *overview()*
 
-On a l'habitude d’utiliser la fonction de base `summary()` qui renvoie les statistiques issuelles, cependant ces paramètres entrent rarement dans le narratif des analystes des données du secteur susmentionnés. Pour reporter les résultats, les experts presentent des apercus globaux ou ils parlent des performances *YTD*, *MTD*, *WTD*, etc... et leurs comparaisons par rapport aux périodes antérieures.
+On a l'habitude d’utiliser la fonction de base `summary()` qui renvoie les statistiques issuelles, cependant ces paramètres entrent rarement dans le narratif des analystes des données du secteur susmentionnés. Pour reporter les résultats, les experts presentent des apercus globaux ou ils parlent des performances *YTD*, *MTD*, *WTD*, etc... et leurs comparaisons par rapport aux périodes antérieures. On parle là de concept de *variation* ou *taux de variation*.
 
-Rappellons ici quelques concepts des comparaisons :
+Le taux de variation (tv) est la mesure de l'évolution du phénomène observé dans le temps. Si on note par $x_a$ la valeur actuelle observée et $x_d$ la valeur observée au départ (dans le passé), on a :
+$$tv = \frac{x_a - x_d}{x_d}$$
+Cette formule permet restreindre la définition du taux de variation qu'avec $x_d \ne 0$ pour exclure le cas de division par `0`.
 
-* La comparaison *DoD* en date du *2023-08-11* : elle consiste à calculer la variation du revenu en cette date par rapport à la date du *2023-08-10*, c-est-à-dire:
-$$DoD = \frac{dday - dday_1}{dday}$$
+En pratique, on lit le résultat en pourcentage, c’est-à-dire $tv*100$.
 
-* La comparaison *SPLM* en date du *2023-08-11* : elle consite à calculer la variation *MTD* au *2023-08-11* par rapport au *MTD* en date du *2023-07-11* (on note souvent par $MTD_1$) :
-$$SLPM = \frac{MTD - MTD_1}{MTD}$$
+Dans les secteurs d’activité auxquels nous travaillons, on utilise plus les variations suivantes :
 
-* La performance *YoY* en date du *2023-08-11* : elle consite à calculer la variation *YTD* au *2023-08-11* par rapport au *YTD* en date du *2022-08-11* (on note souvent par $YTD_1$) :
-$$YoY = \frac{YTD - YTD_1}{YTD}$$
 
-On parle aussi de la comparaison *WoW*, *MoM*, etc.
+* La variation *DoD* en date du *2023-08-11* : elle consiste à calculer la variation du revenu en cette date par rapport à la date du *2023-08-10*, c-est-à-dire:
+$$DoD = \frac{dday - dday_1}{dday_1}$$
+
+* La variation *SPLM* en date du *2023-08-11* : elle consite à calculer la variation *MTD* au *2023-08-11* par rapport au *MTD* en date du *2023-07-11* (on note souvent par $MTD_1$) :
+$$SLPM = \frac{MTD - MTD_1}{MTD_1}$$
+
+* La variation *YoY* en date du *2023-08-11* : elle consite à calculer la variation *YTD* au *2023-08-11* par rapport au *YTD* en date du *2022-08-11* (on note souvent par $YTD_1$) :
+$$YoY = \frac{YTD - YTD_1}{YTD_1}$$
+
+On parle aussi de la variation *WoW*, *MoM*, *SPLY*, etc.
 
 
 Ainsi, si on souhaite avoir un aperçu du revenu en date du *2023-08-11*, on utilise la fonction `overview()` comme suit :
@@ -339,7 +373,7 @@ resultat
 
 On pourra par exemple dire :
 
-En date du *2023-08-11*, l'operateur mobile a réalisé un chiffre d'affaire de `r resultat[, "MTD"]` usd en MTD, soit une `r if (resultat[, "SPLM"] < 0) {"baisse"} else {"hausse"}` de  `r paste(resultat[, "SPLM"], "%", sep="")` comparé à la même periode du mois passé. Avec le nombre de jours restant au cours du mois, on prévoit un total de `r resultat[, "FORECAST"]` usd à la fin mois, ce qui fera une `r if (resultat[, "MoM"] < 0) {"baisse"} else {"hausse"}` de `r paste(resultat[, "MoM"], "%", sep="")` par rapport à tout le  mois de Juillet. En outre, la performance year-to-date atteint `r resultat[, "YTD"]` usd, soit une `r if (resultat[, "SPLY"] < 0) {"baisse"} else {"hausse"}` de `r paste(resultat[, "SPLY"], "%", sep="")` par rapport à l’année passée.
+En date du *2023-08-11*, l'operateur mobile a réalisé un chiffre d'affaire de `r resultat[, "MTD"]` usd en MTD, soit une `r if (resultat[, "SPLM"] < 0) {"baisse"} else {"hausse"}` de  `r paste(resultat[, "SPLM"], "%", sep="")` comparé à la même periode du mois passé. Avec le nombre de jours restant au cours du mois, on prévoit un total de `r resultat[, "FORECAST"]` usd à la fin mois, ce qui fera une `r if (resultat[, "MoM"] < 0) {"baisse"} else {"hausse"}` de `r paste(resultat[, "MoM"], "%", sep="")` par rapport à tout le  mois de Juillet. En outre, la performance year-to-date atteint `r resultat[, "YTD"]` usd, soit une `r if (resultat[, "YoY"] < 0) {"baisse"} else {"hausse"}` de `r paste(resultat[, "YoY"], "%", sep="")` par rapport à l’année passée.
 
 
 Certe, ce discours ne represente pas les causes qui expliquent les resultats en chaque période ni les différentes variations, mais au moins, raconte une histoire évolutive et un aperçu global de la perfomance de l’activité. Il ne restera qu'au rapporteur d'enrichir son histoire avec les resultats des analyses des causes à effet.

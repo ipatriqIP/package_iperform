@@ -13,7 +13,7 @@ NULL
 #' @param x Un vecteur de type numeric contenant les observations du phénomène à etudier.
 #' @param unite Une valeur de type numeric, definissant l'ordre d'echelle d'affisage du resultat de la fonction. Sa valeur par defaut est `1`.
 #' @param decimal Un objet de type numeric permettant de préciser le nombre d'entier à afficher après la virgule. Sa valeur par defaut est `0`.
-#' @param borne Une valeur de type logic permettant de preciser si les valeurs renvoyées doivent avoir le minimum et le maximum pour chauqe dqte. Sa valeur par defaut est `TRUE`.
+#' @param borne Une valeur de type logic permettant de preciser si les valeurs renvoyées doivent avoir le minimum et le maximum pour chauqe date. Sa valeur par defaut est `TRUE`.
 #'
 #' @return Un Data.frame content `n + 3` colonnes, dont `n` vaut le nombre disctinct des années que contient la variable date.
 #'

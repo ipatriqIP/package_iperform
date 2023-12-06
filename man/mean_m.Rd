@@ -16,7 +16,7 @@ mean_m(data, x, unite = 1, decimal = 0, borne = TRUE)
 
 \item{decimal}{Un objet de type numeric permettant de préciser le nombre d'entier à afficher après la virgule. Sa valeur par defaut est \code{0}.}
 
-\item{borne}{Une valeur de type logic permettant de preciser si les valeurs renvoyées doivent avoir le minimum et le maximum pour chauqe dqte. Sa valeur par defaut est \code{TRUE}.}
+\item{borne}{Une valeur de type logic permettant de preciser si les valeurs renvoyées doivent avoir le minimum et le maximum pour chauqe date. Sa valeur par defaut est \code{TRUE}.}
 }
 \value{
 Un Data.frame content \code{n + 3} colonnes, dont \code{n} vaut le nombre disctinct des années que contient la variable date.

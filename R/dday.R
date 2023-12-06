@@ -41,8 +41,15 @@ dday <- function(data,
   stopifnot("date" %in% colnames(data), x %in% colnames(data))
   stopifnot(length(date) == 1, length(d) == 1, length(unite) == 1, length(decimal) == 1)
 
-  valeur <- data[data[, "date"] == as.Date(date) + d, x]
-  valeur <- round(valeur/unite, decimal)
+  jour <- as.Date(date) + d
+
+  if(jour %in% data[, "date"]) {
+    valeur <- data[data[, "date"] == jour, x]
+    valeur <- round(valeur/unite, decimal)
+    }
+  else {
+    valeur <- 0
+    }
 
   return(valeur)
   }
