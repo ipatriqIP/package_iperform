@@ -7,15 +7,14 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![R-CMD-check](https://github.com/ipatriqIP/package_iperform/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ipatriqIP/package_iperform/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Introduction
 
 Le but de iperform est de permettre aux utilisateurs de calculer les
 performances d’une série temporelle à une date ou une période donnée. On
-peut citer par exemple la performance *month-to-date : mtd*
-(respectivement *year-to-date : ytd*) qui consiste à la somme des
+peut citer par exemple la performance *month-to-date : MTD*
+(respectivement *year-to-date : YTD*) qui consiste à la somme des
 valeurs de la série partant du premier jour du mois (respectivement
 premier jour de l’année civil) jusqu’à date. Le package permet également
 de présenter un aperçu global d’une série temporelle différemment de ce
@@ -57,7 +56,7 @@ df <- data.frame(date, x)
 
 # appel de la fonction mtd()
 mtd(df, date = "2023-08-04", x = "x", decimal = 2)
-#> [1] 201.99
+#> [1] 197.5
 ```
 
 Pour verifier, on peut afficher les valeurs qui ont été sommées et
@@ -66,11 +65,11 @@ verifier le calcul à la main :
 ``` r
 # mont-to-date au 4 août 2023 signifie les valeurs du 1er août au 4 août iclus
 df[(df[, "date"] >= "2023-08-01") & (df[, "date"] <= "2023-08-04"), "x"]
-#> [1] 47.79314 53.50270 52.50949 48.18123
+#> [1] 48.44339 56.74261 47.46542 44.85038
 
 # La somme de ces valeurs
 round(sum(df[(df[, "date"] >= "2023-08-01") & (df[, "date"] <= "2023-08-04"), "x"]), 2)
-#> [1] 201.99
+#> [1] 197.5
 ```
 
 ## Catégorie des fonctions
@@ -83,8 +82,8 @@ Les fonctions de *iperform* se regroupent en 4 catégories :
   `full_m()`, `full_q()`, `full_h()` et `full_y()`.
 
 - “Les aperçus” qui renvoient des résumés sur la série en combinant les
-  variations comparées aux périodes antérieures de la série. On cite la
-  fonction `overview()`.
+  variations comparées aux périodes antérieures de la série. On cite les
+  fonctions `taux_v()` et `overview()`.
 
 - “Les previsions” qui renvoient les estimations de valeurs de la série
   en des dates futures. On cite la fonction `forecast_m()`.

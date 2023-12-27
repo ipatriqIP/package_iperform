@@ -18,12 +18,11 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![R-CMD-check](https://github.com/ipatriqIP/package_iperform/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ipatriqIP/package_iperform/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Introduction
 
-Le but de iperform est de permettre aux utilisateurs de calculer les performances d'une série temporelle à une date ou une période donnée. On peut citer par exemple la performance *month-to-date : mtd* (respectivement *year-to-date : ytd*) qui consiste à la somme des valeurs de la série partant du premier jour du mois (respectivement premier jour de l’année civil) jusqu’à date. Le package permet également de présenter un aperçu global d'une série temporelle différemment de ce qu'on a par exemple avec la fonction *summary()*.
+Le but de iperform est de permettre aux utilisateurs de calculer les performances d'une série temporelle à une date ou une période donnée. On peut citer par exemple la performance *month-to-date : MTD* (respectivement *year-to-date : YTD*) qui consiste à la somme des valeurs de la série partant du premier jour du mois (respectivement premier jour de l’année civil) jusqu’à date. Le package permet également de présenter un aperçu global d'une série temporelle différemment de ce qu'on a par exemple avec la fonction *summary()*.
 
 
 Apprenez-en plus sur les fonctions de iperform dans `vignette("iperform")`.
@@ -86,7 +85,7 @@ Les fonctions de *iperform* se regroupent en 4 catégories :
 
 * "Les performances" qui renvoient les valeurs de la série en une date ou une la somme sur une période donnée. On cite les fonctions `dday()`, `wtd()`, `mtd()`, `qtd()`, `htd()`, `ytd()`, `full_w()`, `full_m()`, `full_q()`, `full_h()` et `full_y()`.
 
-* "Les aperçus" qui renvoient des résumés sur la série en combinant les variations comparées aux périodes antérieures de la série. On cite la fonction `overview()`.
+* "Les aperçus" qui renvoient des résumés sur la série en combinant les variations comparées aux périodes antérieures de la série. On cite les fonctions `taux_v()` et `overview()`.
 
 * "Les previsions" qui renvoient les estimations de valeurs de la série en des dates futures. On cite la fonction `forecast_m()`.
 

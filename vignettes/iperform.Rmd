@@ -75,7 +75,9 @@ Le package *iperform* est une boite à outil qui permet de calculer les performa
 
 ### Les aperçus
 
-* `overview()` qui renvoie à l'image de la fonction `summary()`, un résumé des performances couplées avec des comparaisons par rapport aux périodes antérieures de la série.
+* `taux_v()` qui renvoie la variation en pourcentage (`%`) entre la valeur observée de la série temporelle en une date par rapport à une autre date du depart (une date passée).
+
+* `overview()` qui renvoie à l'image de la fonction `summary()`, un résumé des performances couplées avec des variations par rapport aux dates ou périodes antérieures de la série.
 
 
 
@@ -86,7 +88,7 @@ Le package *iperform* est une boite à outil qui permet de calculer les performa
 
 ### Les transformations
 
-* `mean_m()`qui renvoie un nouveau jeu des données créé après transformation de la série intiales. 
+* `mean_m()` qui renvoie un nouveau jeu des données créé après transformation de la série initiales. 
 
 
 
@@ -108,7 +110,7 @@ library(ggplot2)
 
 ### 0. Description des données
 
-Nous allons illustré le fonctionnement de ces fonctions à l'aide d'un jeu de données contenant les indicateurs de l’activité du service voix mobile d'un operateur de téléphonie mobile anonyme.
+Nous allons illustré le fonctionnement de ces fonctions à l'aide d'un jeu de données contenant les indicateurs de l’activité du service voix mobile d'un operateur de téléphonie mobile anonyme[^n1].
 
 ```{r}
 data(voix_mobile)
@@ -318,29 +320,63 @@ Mais au moins, on constate que pour ce modèle, plus on donne en argument une da
 
 
 
-### 7. La fonction *overview()*
+### 7. La fonction *taux_v()*
 
-On a l'habitude d’utiliser la fonction de base `summary()` qui renvoie les statistiques issuelles, cependant ces paramètres entrent rarement dans le narratif des analystes des données du secteur susmentionnés. Pour reporter les résultats, les experts presentent des apercus globaux ou ils parlent des performances *YTD*, *MTD*, *WTD*, etc... et leurs comparaisons par rapport aux périodes antérieures. On parle là de concept de *variation* ou *taux de variation*.
-
-Le taux de variation (tv) est la mesure de l'évolution du phénomène observé dans le temps. Si on note par $x_a$ la valeur actuelle observée et $x_d$ la valeur observée au départ (dans le passé), on a :
+Le taux de variation (tv) est la mesure de l'évolution d'un phénomène observé dans le temps. Si on note par $x_a$ la valeur actuelle observée et $x_d$ la valeur observée au départ (dans le passé), on a :
 $$tv = \frac{x_a - x_d}{x_d}$$
 Cette formule permet restreindre la définition du taux de variation qu'avec $x_d \ne 0$ pour exclure le cas de division par `0`.
 
 En pratique, on lit le résultat en pourcentage, c’est-à-dire $tv*100$.
 
-Dans les secteurs d’activité auxquels nous travaillons, on utilise plus les variations suivantes :
+Ce concept de *variation* ou *taux de variation* est trop utilisé dans les secteurs d’activité auxquels nous travaillons, les variations les plus fréquentes sont les suivantes :
 
-
-* La variation *DoD* en date du *2023-08-11* : elle consiste à calculer la variation du revenu en cette date par rapport à la date du *2023-08-10*, c-est-à-dire:
+* La variation *DtD* en date du *2023-08-11* : elle consiste à calculer la variation du revenu en cette date par rapport à la date du *2023-08-10*, c-est-à-dire:
 $$DoD = \frac{dday - dday_1}{dday_1}$$
 
-* La variation *SPLM* en date du *2023-08-11* : elle consite à calculer la variation *MTD* au *2023-08-11* par rapport au *MTD* en date du *2023-07-11* (on note souvent par $MTD_1$) :
+* La variation *MtD* en date du *2023-08-11* : elle consite à calculer la variation *MTD* au *2023-08-11* par rapport au *MTD* en date du *2023-07-11* (on note souvent par $MTD_1$) :
 $$SLPM = \frac{MTD - MTD_1}{MTD_1}$$
 
-* La variation *YoY* en date du *2023-08-11* : elle consite à calculer la variation *YTD* au *2023-08-11* par rapport au *YTD* en date du *2022-08-11* (on note souvent par $YTD_1$) :
+* La variation *YtD* en date du *2023-08-11* : elle consite à calculer la variation *YTD* au *2023-08-11* par rapport au *YTD* en date du *2022-08-11* (on note souvent par $YTD_1$) :
 $$YoY = \frac{YTD - YTD_1}{YTD_1}$$
 
-On parle aussi de la variation *WoW*, *MoM*, *SPLY*, etc.
+On parle aussi de la variation *WtD*, *MtM*, *YoY*, etc.
+
+Ainsi, si on souhaite calculer le taux de variation du revenu du *11 août 2023* par rapport au *10 août 2023*, on utilise la fonction `taux_v()` comme suit :
+
+```{r}
+taux_v(data = voix_mobile, 
+       date = "2023-08-11", 
+       x = "Revenu", 
+       p = -1)
+
+```
+
+
+par rapport au *04 août 2023* :
+
+```{r}
+taux_v(data = voix_mobile, 
+       date = "2023-08-11", 
+       x = "Revenu")
+
+```
+
+
+Par rapport au *11 juillet 2023* :
+
+```{r}
+taux_v(data = voix_mobile, 
+       date = "2023-08-11", 
+       x = "Revenu", 
+       variation = "mtd")
+
+```
+
+
+
+### 8. La fonction *overview()*
+
+On a l'habitude d’utiliser la fonction de base `summary()` qui renvoie les statistiques issuelles, cependant ces paramètres entrent rarement dans le narratif des analystes des données du secteur susmentionnés. Pour reporter les résultats, les experts presentent des apercus globaux où ils parlent des performances *YTD*, *MTD*, *WTD*, etc... et leurs variations par rapport aux périodes antérieures.
 
 
 Ainsi, si on souhaite avoir un aperçu du revenu en date du *2023-08-11*, on utilise la fonction `overview()` comme suit :
@@ -379,7 +415,7 @@ En date du *2023-08-11*, l'operateur mobile a réalisé un chiffre d'affaire de 
 Certe, ce discours ne represente pas les causes qui expliquent les resultats en chaque période ni les différentes variations, mais au moins, raconte une histoire évolutive et un aperçu global de la perfomance de l’activité. Il ne restera qu'au rapporteur d'enrichir son histoire avec les resultats des analyses des causes à effet.
 
 
-### 8. La fonction *mean_m()*
+### 9. La fonction *mean_m()*
 
 Cette fonction transforme une série temporelle à une série de moyenne mobile où chaque terme de la série devient la moyenne de lui-même avec ses sept(6) derniers termes précédants. A la sortie, la fonction renvoie un jeu des données où chaque colonne renseigne les données d'une année pour être superposées sur un graphe.
 
@@ -409,3 +445,4 @@ head(df_mb, 10)
 
 
 
+[^n1]: Chiffres simulés à partir du rapport trimestriel de l'Autorité de Régulation de Poste et de Télécommunication : [ARPTC-RDC](https://arptc.gouv.cd/observatoire/).

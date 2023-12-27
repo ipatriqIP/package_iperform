@@ -3,7 +3,7 @@
 \encoding{UTF-8}
 \name{dday}
 \alias{dday}
-\title{Calcul de la valeur d-day d'une serie.}
+\title{Calcul de la valeur dday d'une serie.}
 \usage{
 dday(data, date, d = 0, x, unite = 1, decimal = 0)
 }
@@ -16,7 +16,7 @@ dday(data, date, d = 0, x, unite = 1, decimal = 0)
 
 \item{x}{Un vecteur de type numeric contenant les observations du phénomène à etudier.}
 
-\item{unite}{Un valeur de type numeric, definissant l'ordre d'echelle d'affisage du resultat de la fonction. Sa valeur par defaut est \code{1}.}
+\item{unite}{Une valeur de type numeric, definissant l'ordre d'echelle d'affisage du resultat de la fonction. Sa valeur par defaut est \code{1}.}
 
 \item{decimal}{Un objet de type numeric permettant de préciser le nombre d'entier à afficher après la virgule. Sa valeur par defaut est \code{0}.}
 }
@@ -24,7 +24,7 @@ dday(data, date, d = 0, x, unite = 1, decimal = 0)
 Un vecteur de longieur 1.
 }
 \description{
-Cette fonction permet de trouver la valeur d'une série à une date voulue par l'utilisateur, le d-day.
+Cette fonction permet de trouver la valeur d'une série à une date voulue par l'utilisateur, le dday.
 }
 \examples{
 x <- rnorm(222, mean = 50, sd = 6.3)
