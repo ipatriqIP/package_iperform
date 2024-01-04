@@ -50,9 +50,7 @@ full_q <- function(data,
   trim <- quarter(date) + q
 
   b <- ifelse(leap_year(annee), 1, 0)
-  fin_trim <- ifelse(trim == 1, 90 + b,
-                     ifelse(trim == 2, 180 + b,
-                            ifelse(trim == 3, 273 + b, 365 + b)))
+  fin_trim <- ifelse(trim == 1, 90 + b, ifelse(trim == 2, 180 + b, ifelse(trim == 3, 273 + b, 365 + b)))
 
   if (isTRUE(cumul)) {
     valeur <- data[(data[, "annee"] == annee) & (data[, "trimestre"] == trim) & (data[, "jour_a"] == fin_trim), x]

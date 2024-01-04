@@ -5,7 +5,16 @@
 \alias{overview}
 \title{Calcul de l’aperçu global : overview.}
 \usage{
-overview(data, date, x, unite = 1, decimal = 0, cumul = FALSE)
+overview(
+  data,
+  date,
+  x,
+  unite = 1,
+  decimal = 0,
+  cumul = FALSE,
+  freq = "jour",
+  facteur
+)
 }
 \arguments{
 \item{data}{Un objet de type data.frame contenant au minimum la serie numerique et un vecteur de type date.}
@@ -19,6 +28,10 @@ overview(data, date, x, unite = 1, decimal = 0, cumul = FALSE)
 \item{decimal}{Un objet de type numeric permettant de préciser le nombre d'entier à afficher après la virgule. Sa valeur par defaut est \code{0}.}
 
 \item{cumul}{Un objet de type logic qui permet d'indiquer si le vecteur \code{x} contient des valeurs cumulées. Sa valeur par defaut est \code{FALSE}.}
+
+\item{freq}{Un objet de type character qui permet d'indiquer si la vue globale est faite sur une frequence journalière ou mensuelle. Sa valeur par defaut est \code{jour}.}
+
+\item{facteur}{Un objet de type factor ou charcter qui permet d'indiquer si le vecteur \code{x} contient des valeurs répétées.}
 }
 \value{
 Un vecteur de longieur 1.

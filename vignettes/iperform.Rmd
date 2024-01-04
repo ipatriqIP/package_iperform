@@ -387,7 +387,8 @@ overview(data = voix_mobile,
          x = "Revenu",
          unite = 1,
          decimal = 2,
-         cumul = FALSE)
+         cumul = FALSE,
+         freq = "full")
 
 ```
 
@@ -395,12 +396,13 @@ overview(data = voix_mobile,
 Lecture de la sortie du code R :
 
 ```{r, echo=FALSE}
-resultat = overview(data = voix_mobile,
+resultat <- overview(data = voix_mobile,
                     date = "2023-08-11",
                     x = "Revenu",
                     unite = 1,
                     decimal = 2,
-                    cumul = FALSE)
+                    cumul = FALSE,
+                    freq = "full")
 
 resultat
 

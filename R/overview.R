@@ -14,6 +14,8 @@ NULL
 #' @param unite Un valeur de type numeric, definissant l'ordre d'echelle d'affisage du resultat de la fonction. Sa valeur par defaut est `1`.
 #' @param decimal Un objet de type numeric permettant de préciser le nombre d'entier à afficher après la virgule. Sa valeur par defaut est `0`.
 #' @param cumul Un objet de type logic qui permet d'indiquer si le vecteur `x` contient des valeurs cumulées. Sa valeur par defaut est `FALSE`.
+#' @param freq Un objet de type character qui permet d'indiquer si la vue globale est faite sur une frequence journalière ou mensuelle. Sa valeur par defaut est `jour`.
+#' @param facteur Un objet de type factor ou charcter qui permet d'indiquer si le vecteur `x` contient des valeurs répétées.
 #'
 #' @return Un vecteur de longieur 1.
 #'
@@ -32,7 +34,9 @@ overview <- function(data,
                      x,
                      unite = 1,
                      decimal = 0,
-                     cumul = FALSE) {
+                     cumul = FALSE,
+                     freq = "jour",
+                     facteur) {
 
   stopifnot(is.data.frame(data),
             is.character(date) & is.Date(as.Date(date)),
@@ -42,7 +46,13 @@ overview <- function(data,
   stopifnot("date" %in% colnames(data), x %in% colnames(data))
   stopifnot(length(date) == 1, length(unite) == 1, length(decimal) == 1)
 
-  Facteur <- x
+  n = length(table(duplicated(data$date)))
+  if (n == 1 & missing(facteur)){
+    Facteur <- x
+    }
+  else {
+    Facteur <- unique(data[, facteur])
+    }
 
   DDay <- dday(data = data, date = date, d = 0, x = x, unite = unite)
   DDay7 <- dday(data = data, date = date, d = -7, x = x, unite = unite)
@@ -50,18 +60,26 @@ overview <- function(data,
   WTD1 <- wtd(data = data, date = date, w = -1, x = x, unite = unite, cumul = cumul)
   MTD <- mtd(data = data, date = date, m = 0, x = x, unite = unite, cumul = cumul)
   MTD1 <- mtd(data = data, date = date, m = -1, x = x, unite = unite, cumul = cumul)
-  Full_M <- full_m(data = data, date = date, x = x, unite = unite, cumul = cumul)
+  Full_M1 <- full_m(data = data, date = date, m = -1, x = x, unite = unite, cumul = cumul)
+  Full_M <- full_m(data = data, date = date, m = 0, x = x, unite = unite, cumul = cumul)
   FORECAST <- forecast_m(data = data, date = date, x = x, unite = unite)
+  QTD <- qtd(data = data, date = date, q = 0, x = x, unite = unite, cumul = cumul)
+  QTD1 <- qtd(data = data, date = date, q = -1, x = x, unite = unite, cumul = cumul)
   YTD <- ytd(data = data, date = date, a = 0, x = x, unite = unite, cumul = cumul)
   YTD1 <- ytd(data = data, date = date, a = -1, x = x, unite = unite, cumul = cumul)
 
   DoD <- round((DDay/DDay7 - 1)*100, decimal)
   WoW <- round((WTD/WTD1 - 1)*100, decimal)
   SPLM <- round((MTD/MTD1 - 1)*100, decimal)
-  MoM <- round((FORECAST/Full_M - 1)*100, decimal)
+  MoM <- round((FORECAST/Full_M1 - 1)*100, decimal)
+  QoQ <- round((QTD/QTD1 - 1)*100, decimal)
   YoY <- round((YTD/YTD1 - 1)*100, decimal)
 
-  df <- data.frame(Facteur, DDay7, DDay, DoD, WTD1, WTD, WoW, MTD1, MTD, SPLM, Full_M, FORECAST, MoM, YTD1, YTD, YoY)
+  df <- switch(freq,
+               "jour" = data.frame(Facteur, DDay7, DDay, DoD, WTD1, WTD, WoW, MTD1, MTD, SPLM, Full_M1, FORECAST, MoM),
+               "mois" = data.frame(Facteur, Full_M1, Full_M, MoM, QTD1, QTD, QoQ, YTD1, YTD, YoY),
+               "full" = data.frame(Facteur, DDay7, DDay, DoD, WTD1, WTD, WoW, MTD1, MTD, SPLM, Full_M1, FORECAST, MoM, QTD1, QTD, QoQ, YTD1, YTD, YoY)
+               )
   df[is.na(df)] <- 0
 
   return(df)

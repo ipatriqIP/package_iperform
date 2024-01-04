@@ -45,14 +45,14 @@ qtd <- function(data,
   stopifnot(length(date) == 1, length(unite) == 1, length(decimal) == 1)
 
   annee <- year(date)
-  trimestre <- quarter(date) + q
-
   b <- ifelse(leap_year(annee), 1, 0)
-  debut_trim <- ifelse(trimestre == 1, 1,
-                       ifelse(trimestre == 2, 91 + b,
-                              ifelse(trimestre == 3, 182 + b, 274 + b)))
+  trim <- quarter(date)
+  debut_trim <- ifelse(trim == 1, 1, ifelse(trim == 2, 91 + b, ifelse(trim == 3, 182 + b, 274 + b)))
+  n <- yday(date) - debut_trim
 
-  jour_a <- yday(date)
+  trim <- trim + q
+  debut_trim <- ifelse(trim == 1, 1, ifelse(trim == 2, 91 + b, ifelse(trim == 3, 182 + b, 274 + b)))
+  jour_a <- debut_trim + n
 
   data$annee <- year(data[, "date"])
   data$trimestre <- quarter(data[, "date"])
@@ -60,10 +60,10 @@ qtd <- function(data,
 
 
   if (isTRUE(cumul)) {
-    valeur <- data[(data[, "annee"] == annee) & (data[, "trimestre"] == trimestre) & (data[, "jour_a"] == jour_a), x]
+    valeur <- data[(data[, "annee"] == annee) & (data[, "trimestre"] == trim) & (data[, "jour_a"] == jour_a), x]
     }
   else {
-    valeur <- sum(data[(data[, "annee"] == annee) & (data[, "trimestre"] == trimestre) & (data[, "jour_a"] >= debut_trim) & (data[, "jour_a"] <= jour_a), x])
+    valeur <- sum(data[(data[, "annee"] == annee) & (data[, "trimestre"] == trim) & (data[, "jour_a"] >= debut_trim) & (data[, "jour_a"] <= jour_a), x])
     }
 
   valeur <- round(valeur/unite, decimal)

@@ -56,7 +56,7 @@ df <- data.frame(date, x)
 
 # appel de la fonction mtd()
 mtd(df, date = "2023-08-04", x = "x", decimal = 2)
-#> [1] 197.5
+#> [1] 208.39
 ```
 
 Pour verifier, on peut afficher les valeurs qui ont été sommées et
@@ -65,11 +65,11 @@ verifier le calcul à la main :
 ``` r
 # mont-to-date au 4 août 2023 signifie les valeurs du 1er août au 4 août iclus
 df[(df[, "date"] >= "2023-08-01") & (df[, "date"] <= "2023-08-04"), "x"]
-#> [1] 48.44339 56.74261 47.46542 44.85038
+#> [1] 49.22324 54.96808 48.55842 55.64443
 
 # La somme de ces valeurs
 round(sum(df[(df[, "date"] >= "2023-08-01") & (df[, "date"] <= "2023-08-04"), "x"]), 2)
-#> [1] 197.5
+#> [1] 208.39
 ```
 
 ## Catégorie des fonctions
