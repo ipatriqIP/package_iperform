@@ -19,6 +19,10 @@
 
 * Fonction `mean_m()` : ajout d'un paramètre `borne` pour contrôler la sortie de la fonction.
 
+* Fonction `qtd()` : correction de l'usage du parametre `q` pour decaler les trimestres.
+
+* Fonction `overview()` : ajout de parametres `jour` et `freq` pour regler la sortie des performances à retourner.
+
 
 ## Ajout jeu des données
 
