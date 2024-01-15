@@ -23,4 +23,4 @@ Language: en, fr
 VignetteBuilder: knitr
 LazyData: true
 Depends: 
-    R (>= 3.5.0)
+    R (>= 4.3.0)
