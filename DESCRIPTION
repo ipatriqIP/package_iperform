@@ -1,6 +1,6 @@
 Package: iperform
 Title: Time Series Performance
-Version: 0.0.2
+Version: 0.0.3
 Authors@R: c(
     person("Patrick", "Ilunga", , "patrick.ilunga@unikin.ac.cd", role = c("aut", "cre")),
     person(, "Ilunga Buabua Patrick", role = "cph")
